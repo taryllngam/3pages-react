@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @layer scroll-m-0 croll-p-0
+ }
+
+ form {
+    @apply  bg-gray-100 flex items-center  justify-center
+    flex-col gap-8 p-56  my-40 h-fit	
+ }
+
+ h1 {
+    @apply text-5xl
+ }

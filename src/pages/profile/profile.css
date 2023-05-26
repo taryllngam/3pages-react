@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.welcome1 {
+  @apply my-40;
+}
+
+h3 {
+  @apply text-5xl;
+}
+
+.btn {
+  @apply shadow-md flex flex-row items-center justify-center;
+}
+
+.info {
+  @apply flex flex-col gap-8;
+}
+
+.infos {
+  @apply underline;
+}
