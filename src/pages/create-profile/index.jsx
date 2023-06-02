@@ -19,19 +19,6 @@ export default function SignupForm() {
       email: "",
       image: "",
     },
-    Validate: (values) => {
-      const errors = {};
-      if (!values.email) {
-        errors.email = "Required";
-      }
-      if (!values.firstName) {
-        errors.firstName = "FirstName Required";
-      }
-      if (!values.lastName) {
-        errors.lastName = "LastName required";
-      }
-      return errors;
-    },
 
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));

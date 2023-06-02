@@ -6,7 +6,7 @@
   @apply my-40;
 }
 
-h3 {
+.welcome1 h3 {
   @apply text-5xl;
 }
 
@@ -16,8 +16,4 @@ h3 {
 
 .info {
   @apply flex flex-col gap-8;
-}
-
-.infos {
-  @apply underline;
 }
