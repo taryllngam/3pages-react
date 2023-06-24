@@ -15,5 +15,9 @@
 }
 
 .info {
-  @apply flex flex-col gap-8;
+  @apply flex flex-row gap-9;
+}
+
+img {
+  width: 50vw;
 }

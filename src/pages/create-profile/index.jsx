@@ -6,12 +6,42 @@ import "../create-profile/styles.css";
 import img1 from "../../create.png";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useLocalStorage } from "../../context/ProfileContext";
 
 export default function SignupForm() {
   // Note that we have to initialize ALL of fields with values. These
   // could come from props, but since we don’t want to prefill this form,
   // we just use an empty string. If we don’t do this, React will yell
   // at us.
+  const { value, setValue } = useLocalStorage("values", []);
+
+  const convert2base64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await convert2base64(file);
+    console.log(base64);
+
+    setValue(() => ({ image: base64 }));
+  };
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/profile`);
+  };
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -21,8 +51,8 @@ export default function SignupForm() {
     },
 
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       localStorage.setItem("values", JSON.stringify(values));
+      navigate(`/profile`);
     },
   });
 
@@ -75,19 +105,14 @@ export default function SignupForm() {
             type="file"
             id="image"
             name="image"
-            multiple
-            accept="image/jpg, image/jpeg, image/png"
-            onChange={formik.handleChange}
+            onChange={(e) => uploadImage(e)}
             className="img"
           />
         </div>
 
-        <Link to={{ pathname: "/profile" }} target="_blank">
-          {" "}
-          <button className="btn" type="submit">
-            SignUp
-          </button>
-        </Link>
+        <button className="btn" type="submit">
+          SignUp
+        </button>
       </form>
     </div>
   );

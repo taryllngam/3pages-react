@@ -1,38 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "../profile/profile.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ProfileContext, useLocalStorage } from "../../context/ProfileContext";
+import Modal from "../Modal/modal";
+import { useContext } from "react";
+
 
 export default function Profile() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("values"));
-    if (data) {
-      setData(data);
-    }
-  }, []);
+  const { value, setValue } = useLocalStorage("values", []);
+  // const [value, setvalue] = useState([]);
+  // useEffect(() => {
+  //   const data = JSON.parse(localStorage.getItem("values"));
+  //   if (data) {
+  //     setData(data);
+  //   }
+  // }, []);
+  const { visible, handleOpen } = useContext(ProfileContext)
+
+ 
   return (
     <div className="welcome">
+      {visible && <Modal />}
       <div className="welcome1">
-        <h3>Welcome to your dashboard {data.firstName}!</h3>
-        <h2>CLIENT INFO</h2>
+        <h3>Welcome to your dashboard {value.firstName}!</h3>
+        <div className="infos">
+            <img src={value.image} alt="" /> 
+          </div>
         <div className="info">
           <div className="infos">
-            <span>FIRST NAME</span> :<label>{data.firstName}</label>
+           <label>{value.firstName}</label>
           </div>
           <div className="infos">
-            <span>LAST NAME</span> :<label>{data.lastName}</label>
+           <label>{value.lastName}</label>
           </div>
           <div className="infos">
-            <span>EMAIL</span> :<label>{data.email}</label>
+           <label>{value.email}</label>
           </div>
-          <div className="infos">
-            <span>IMAGE</span> :<label>{data.image}</label>
-          </div>
+          
         </div>
-        <Link to={{ pathname: "/edit" }} target="_blank">
-          {" "}
-          <button className="btn">Edit Info</button>
-        </Link>
+      
+          <button className="btn" onClick={handleOpen}>Edit Info</button>
+ 
       </div>
     </div>
   );
